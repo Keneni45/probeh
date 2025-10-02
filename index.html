@@ -8,6 +8,36 @@
       font-family: sans-serif;
       line-height: 1.6;
       padding: 20px;
+      background-color: #f0f0f0;
+    }
+    #content {
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 8px;
+    }
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+    }
+    .collapsible {
+      background-color: #777;
+      color: white;
+      cursor: pointer;
+      padding: 18px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;
+    }
+    .active, .collapsible:hover {
+      background-color: #555;
+    }
+    .content {
+      padding: 0 18px;
+      display: none;
+      overflow: hidden;
+      background-color: #f1f1f1;
     }
   </style>
 </head>
@@ -21,6 +51,24 @@
         const md = window.markdownit();
         const html = md.render(text);
         document.getElementById('content').innerHTML = html;
+
+        // Add collapsible functionality to the table of contents
+        const toc = document.querySelector('h2'); // Assuming the first h2 is "Table of Contents"
+        if (toc && toc.textContent === 'Table of Contents') {
+          const tocContent = toc.nextElementSibling;
+          toc.classList.add('collapsible');
+          tocContent.classList.add('content');
+
+          toc.addEventListener('click', function() {
+            this.classList.toggle('active');
+            const content = this.nextElementSibling;
+            if (content.style.display === 'block') {
+              content.style.display = 'none';
+            } else {
+              content.style.display = 'block';
+            }
+          });
+        }
       });
   </script>
 </body>
